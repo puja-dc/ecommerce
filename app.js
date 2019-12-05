@@ -1,5 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const userRoutes = require('./routes/user');
@@ -14,7 +17,12 @@ mongoose
   })
   .then(() => console.log('Database Connected!'));
 
-// Routes
+// Middleware
+app.use(morgan('dev'));
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+// Routes Middleware
 app.use('/api', userRoutes);
 
 const port = process.env.PORT || 8080;
